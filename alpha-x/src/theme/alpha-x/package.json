@@ -1,0 +1,40 @@
+{
+  "name": "unified-theme",
+  "version": "1.0.0",
+  "description": "React modules for the Elevate theme",
+  "scripts": {
+    "start": "hs-cms-dev-server .",
+    "generate-tmp-json-for-translations": "jsx-module-fields-to-fields-json",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build --output-dir ../../cms-elevate-theme-static-assets/static/dist",
+    "test-storybook": "test-storybook",
+    "test-storybook-local": "test-storybook --url http://localhost:8080",
+    "test-storybook-ci": "./scripts/test-storybook-ci.sh",
+    "test-storybook-published": "test-storybook --url https://app.hubspotqa.com/cms-elevate-theme-storybook/",
+    "preview-storybook": "npx serve ../../cms-elevate-theme-static-assets/static/dist -l 8080 -L",
+    "clean-storybook": "rm -rf ../../cms-elevate-theme-static-assets/static/dist"
+  },
+  "type": "module",
+  "keywords": [],
+  "dependencies": {
+    "@hubspot/cms-components": "^1.0.0",
+    "@splidejs/react-splide": "^0.7.12",
+    "@types/react": "^18",
+    "html-react-parser": "^5.1.16",
+    "isomorphic-dompurify": "2.26.0",
+    "prop-types": "^15.8",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@hubspot/cms-dev-server": "^1.0.0",
+    "@storybook/addon-docs": "^9.1.4",
+    "@storybook/addon-links": "^9.1.2",
+    "@storybook/builder-vite": "^9.1.2",
+    "@storybook/react-vite": "^9.1.2",
+    "@storybook/test-runner": "^0.23.0",
+    "@testing-library/react": "^16",
+    "@vitejs/plugin-react": "^4",
+    "storybook": "^9.1.2"
+  }
+}
