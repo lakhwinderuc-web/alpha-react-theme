@@ -1,0 +1,34 @@
+.BannerSection {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* Desktop defaults */
+  padding-top: var(--alphaBanner-paddingTop-desktop);
+  padding-bottom: var(--alphaBanner-paddingBottom-desktop);
+  padding-left: var(--alphaBanner-paddingLeft-desktop);
+  padding-right: var(--alphaBanner-paddingRight-desktop);
+  margin-top:var(--alphaBanner-marginTop-desktop);
+  margin-bottom: var(--alphaBanner-marginBottom-desktop);
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .BannerSection {
+    padding-top: var(--alphaBanner-paddingTop-tablet);
+    padding-bottom: var(--alphaBanner-paddingBottom-tablet);
+    padding-left: var(--alphaBanner-paddingLeft-tablet);
+    padding-right: var(--alphaBanner-paddingRight-tablet);
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .BannerSection {
+    padding-top: var(--alphaBanner-paddingTop-mobile);
+    padding-bottom: var(--alphaBanner-paddingBottom-mobile);
+    padding-left: var(--alphaBanner-paddingLeft-mobile);
+    padding-right: var(--alphaBanner-paddingRight-mobile);
+  }
+}

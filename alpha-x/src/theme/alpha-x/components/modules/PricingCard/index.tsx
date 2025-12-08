@@ -186,7 +186,7 @@ export const Component = (props: PricingCardProps) => {
             cardIndex={index}
           />
           {pricingCard.groupButton.showButton && (
-            <ButtonWrapper className={swm('hs-elevate-pricing-card-container__button-container')}>
+            <ButtonWrapper className={swm('hs-elevate-pricing-card-container__button-container ')}>
               <Button
                 additionalClassArray={[swm('hs-elevate-pricing-card-container__button')]}
                 buttonStyle={buttonStyleVariant}
