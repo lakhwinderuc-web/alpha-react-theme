@@ -15,6 +15,7 @@
   border-color: var(--hsElevate--button--primary__borderColor);
   border-radius: var(--hsElevate--button--primary__borderRadius);
   text-decoration: none;
+  padding: var(--hsElevate--spacing--16) var(--hsElevate--spacing--24);
 }
 
 .hs-elevate-button--primary:hover {
@@ -45,6 +46,8 @@
   border-color: var(--hsElevate--button--secondary__borderColor);
   border-radius: var(--hsElevate--button--secondary__borderRadius);
   text-decoration: none;
+  padding: var(--hsElevate--spacing--16) var(--hsElevate--spacing--24);
+
 }
 
 .hs-elevate-button--secondary:hover {
@@ -75,6 +78,8 @@
   border-color: var(--hsElevate--button--tertiary__borderColor);
   border-radius: var(--hsElevate--button--tertiary__borderRadius);
   text-decoration: none;
+  padding: var(--hsElevate--spacing--16) var(--hsElevate--spacing--24);
+
 }
 
 .hs-elevate-button--tertiary:hover {
@@ -105,6 +110,8 @@
   border-color: var(--hsElevate--button--accent__borderColor);
   border-radius: var(--hsElevate--button--accent__borderRadius);
   text-decoration: none;
+  padding: var(--hsElevate--spacing--16) var(--hsElevate--spacing--24);
+
 }
 
 .hs-elevate-button--accent:hover {
