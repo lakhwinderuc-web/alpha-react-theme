@@ -28,6 +28,18 @@ export const fields = (
         default='<h2>Our Services</h2>'
       />
 </FieldGroup>
+<FieldGroup label='Slider Enable' name='slider_enable'>
+  <BooleanField
+      name="enable"
+      label="Enable/ Disable"
+      required={false}
+      locked={false}
+      display="toggle"
+      inlineHelpText="Slider Enable when toggled on"
+      default={false}
+    />
+
+</FieldGroup>
 
   <FieldGroup name="cards_repeat" label="Card Repeat">
   <RepeatedFieldGroup
@@ -243,7 +255,7 @@ default={{
 />
       </FieldGroup>
 
-   <GradientField
+ <GradientField
   name="bg_gradient"
   label="Background gradient"
   helpText="Sets a gradient behind the content"
@@ -252,17 +264,17 @@ default={{
     colors: [
       {
         color: {
-          r: 255,
-          g: 255,
-          b: 255,
+          r: "255",
+          g: "255",
+          b: "255",
           a: 1,
         },
       },
       {
         color: {
-          r: 255,
-          g: 255,
-          b: 255,
+          r: "255",
+          g: "255",
+          b: "255",
           a: 1,
         },
       },
@@ -278,6 +290,7 @@ default={{
     controlling_value_regex: "bg_color",
   }}
 />
+
 
 </FieldGroup>
 

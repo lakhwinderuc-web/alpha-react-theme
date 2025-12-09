@@ -1,40 +1,44 @@
-import styles from "./sample-react-module.module.css";
 import { useId } from 'react';
-export const Component = ({ fieldValues ,moduleInstanceId  }) => {
+import  ReactSlick from 'react-slick';
 
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css'
+
+export const Component = ({ fieldValues }) => {
+const Slider = ReactSlick.default || ReactSlick; 
   const cards = fieldValues.cards_repeat?.items || [];
-  const reactId = useId();  
+  const reactId = useId();
   const uniqueClass = `module_${reactId.replace(/[^a-zA-Z0-9]/g, "")}`;
 
   // ---- Extract Dynamic Style Fields ----
-  const ds = fieldValues.style?.spacing?.desktop?.desktop_spacing;
+  const ds = fieldValues.style?.spacing?.desktop?.desktop_spacing || {};
   const desktopStyle = {
-    paddingTop: ds?.padding?.top?.value + ds?.padding?.top?.units,
-    paddingBottom: ds?.padding?.bottom?.value + ds?.padding?.bottom?.units,
-    paddingLeft: ds?.padding?.left?.value + ds?.padding?.left?.units,
-    paddingRight: ds?.padding?.right?.value + ds?.padding?.right?.units,
+    paddingTop: (ds.padding?.top?.value || 0) + (ds.padding?.top?.units || 'px'),
+    paddingBottom: (ds.padding?.bottom?.value || 0) + (ds.padding?.bottom?.units || 'px'),
+    paddingLeft: (ds.padding?.left?.value || 0) + (ds.padding?.left?.units || 'px'),
+    paddingRight: (ds.padding?.right?.value || 0) + (ds.padding?.right?.units || 'px'),
   };
 
-  const ts = fieldValues.style?.spacing?.tablet?.tablet_spacing;
+  const ts = fieldValues.style?.spacing?.tablet?.tablet_spacing || {};
   const tabletStyle = {
-    paddingTop: ts?.padding?.top?.value + ts?.padding?.top?.units,
-    paddingBottom: ts?.padding?.bottom?.value + ts?.padding?.bottom?.units,
-    paddingLeft: ts?.padding?.left?.value + ts?.padding?.left?.units,
-    paddingRight: ts?.padding?.right?.value + ts?.padding?.right?.units,
+    paddingTop: (ts.padding?.top?.value || 0) + (ts.padding?.top?.units || 'px'),
+    paddingBottom: (ts.padding?.bottom?.value || 0) + (ts.padding?.bottom?.units || 'px'),
+    paddingLeft: (ts.padding?.left?.value || 0) + (ts.padding?.left?.units || 'px'),
+    paddingRight: (ts.padding?.right?.value || 0) + (ts.padding?.right?.units || 'px'),
   };
 
-  const ms = fieldValues.style?.spacing?.mobile?.mobile_spacing;
+  const ms = fieldValues.style?.spacing?.mobile?.mobile_spacing || {};
   const mobileStyle = {
-    paddingTop: ms?.padding?.top?.value + ms?.padding?.top?.units,
-    paddingBottom: ms?.padding?.bottom?.value + ms?.padding?.bottom?.units,
-    paddingLeft: ms?.padding?.left?.value + ms?.padding?.left?.units,
-    paddingRight: ms?.padding?.right?.value + ms?.padding?.right?.units,
+    paddingTop: (ms.padding?.top?.value || 0) + (ms.padding?.top?.units || 'px'),
+    paddingBottom: (ms.padding?.bottom?.value || 0) + (ms.padding?.bottom?.units || 'px'),
+    paddingLeft: (ms.padding?.left?.value || 0) + (ms.padding?.left?.units || 'px'),
+    paddingRight: (ms.padding?.right?.value || 0) + (ms.padding?.right?.units || 'px'),
   };
 
   const bg = fieldValues.style?.background;
   let backgroundCSS = "";
 
-  // gradient
+  // gradient background
   if (bg?.background_type === "bg_color" && bg?.bg_gradient) {
     const vertical = bg.bg_gradient.side_or_corner?.verticalSide;
     const horizontal = bg.bg_gradient.side_or_corner?.horizontalSide;
@@ -79,109 +83,208 @@ export const Component = ({ fieldValues ,moduleInstanceId  }) => {
 
     backgroundCSS = `
       background-image: url(${bg.bg_image.src});
-      background-size: ${bg.bg_image.background_size};    
+      background-size: ${bg.bg_image.background_size};
       background-position: ${bgPos};
     `;
   }
+
+  const settings = {
+    dots: true,
+    infinite: true, // temporarily true for better testing
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: true,
+    autoplay: true,
+    autoplaySpeed: 3000,
+  };
 
   return (
     <>
       <style>
         {`
-        .icon-content-cards.${uniqueClass}{
-          ${backgroundCSS};
-          padding-top: ${desktopStyle.paddingTop};
-          padding-bottom: ${desktopStyle.paddingBottom};
-          padding-left: ${desktopStyle.paddingLeft};
-          padding-right: ${desktopStyle.paddingRight};
-        }
-.${uniqueClass} .icon-content-cards__wrapper{
-max-width: 1280px;
-padding: 0 20px;
-margin: 0 auto;
-}
-    
-.${uniqueClass} .icon-content-cards__heading{
-text-align: center;
-    margin-bottom: 50px;
-}
-
-
-.${uniqueClass} .icon-content-cards__heading>*,
-.${uniqueClass} .cardHeading>*{margin: 0;}
-
-.${uniqueClass} .icon-content-cards__cards{display: grid;   grid-template-columns: repeat(3, 1fr);  gap: 20px ;}
-.${uniqueClass} .iconInner { margin-bottom: 30px;}
-.${uniqueClass} .iconInner svg{height: 20px;}
-
-.${uniqueClass} .icon-content-card__items{padding: 25px;  border-radius: 10px; border: 1px solid #051f46;}
-
-        @media(max-width:1024px){
-          .icon-content-cards.${uniqueClass}{
-            padding-top: ${tabletStyle.paddingTop};
-            padding-bottom: ${tabletStyle.paddingBottom};
-            padding-left: ${tabletStyle.paddingLeft};
-            padding-right: ${tabletStyle.paddingRight};
+          .icon-content-cards.${uniqueClass} {
+            ${backgroundCSS};
+            padding-top: ${desktopStyle.paddingTop};
+            padding-bottom: ${desktopStyle.paddingBottom};
+            padding-left: ${desktopStyle.paddingLeft};
+            padding-right: ${desktopStyle.paddingRight};
           }
-        }
-        @media(max-width:767px){
-          .icon-content-cards.${uniqueClass}{
-            padding-top: ${mobileStyle.paddingTop};
-            padding-bottom: ${mobileStyle.paddingBottom};
-            padding-left: ${mobileStyle.paddingLeft};
-            padding-right: ${mobileStyle.paddingRight};
+
+          .${uniqueClass} .icon-content-cards__wrapper {
+            max-width: 1280px;
+            padding: 0 20px;
+            margin: 0 auto;
           }
-        }
-      `}
+
+          .${uniqueClass} .icon-content-cards__heading {
+            text-align: center;
+            margin-bottom: 50px;
+          }
+
+          .${uniqueClass} .icon-content-cards__heading > *,
+          .${uniqueClass} .cardHeading > * {
+            margin: 0;
+          }
+
+          .${uniqueClass} .icon-content-cards__cards {
+            width: 100%;
+            position: relative;
+            padding: 0 50px;
+          }
+
+          .${uniqueClass} .slick-slide {
+            padding: 0 10px;
+            box-sizing: border-box;
+          }
+
+          .${uniqueClass} .icon-content-card__items {
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #051f46;
+            height: 100%;
+            box-sizing: border-box;
+          }
+
+          .${uniqueClass} .icon-content-card__icon {
+            margin-bottom: 20px;
+          }
+
+          .${uniqueClass} .icon-content-card__icon img {
+            display: block;
+            object-fit: contain;
+            max-width: 100%;
+            height: auto;
+          }
+
+          .${uniqueClass} .iconInner {
+            margin-bottom: 30px;
+          }
+
+          .${uniqueClass} .iconInner svg {
+            height: 20px;
+          }
+
+          /* Slick arrows styling */
+          .${uniqueClass} .slick-arrow {
+            width: 40px;
+            height: 40px;
+            z-index: 1000;  /* increased for click priority */
+            background: #000;
+          }
+
+          .${uniqueClass} .slick-arrow:before {
+            font-size: 40px;
+            opacity: 1;
+          }
+
+          .${uniqueClass} .slick-prev {
+            left: 0;
+          }
+
+          .${uniqueClass} .slick-next {
+            right: 0;
+          }
+
+          .${uniqueClass} .slick-prev:hover,
+          .${uniqueClass} .slick-next:hover {
+            opacity: 0.8;
+          }
+
+          /* Slick dots styling */
+          .${uniqueClass} .slick-dots {
+            position: relative;
+            bottom: 0;
+            margin-top: 30px;
+          }
+
+          .${uniqueClass} .slick-dots li {
+            margin: 0 5px;
+          }
+
+          .${uniqueClass} .slick-dots li button:before {
+            font-size: 12px;
+            opacity: 0.5;
+          }
+
+          .${uniqueClass} .slick-dots li.slick-active button:before {
+            opacity: 1;
+          }
+
+          @media(max-width:1024px) {
+            .icon-content-cards.${uniqueClass} {
+              padding-top: ${tabletStyle.paddingTop};
+              padding-bottom: ${tabletStyle.paddingBottom};
+              padding-left: ${tabletStyle.paddingLeft};
+              padding-right: ${tabletStyle.paddingRight};
+            }
+
+            .${uniqueClass} .icon-content-cards__cards {
+              padding: 0 40px;
+            }
+          }
+
+          @media(max-width:767px) {
+            .icon-content-cards.${uniqueClass} {
+              padding-top: ${mobileStyle.paddingTop};
+              padding-bottom: ${mobileStyle.paddingBottom};
+              padding-left: ${mobileStyle.paddingLeft};
+              padding-right: ${mobileStyle.paddingRight};
+            }
+
+            .${uniqueClass} .icon-content-cards__cards {
+              padding: 0 35px;
+            }
+          }
+        `}
       </style>
-     <div className={`icon-content-cards ${uniqueClass}`}>
-  <div className="icon-content-cards__wrapper">
 
-    <div
-      className="icon-content-cards__heading"
-      dangerouslySetInnerHTML={{ __html: fieldValues.main_heading.heading }}
-    />
-
-    <div className="icon-content-cards__cards">
-
-      {cards.map((card, index) => (
-        <div key={index} className="icon-content-card__items">
-
-          <div className="icon-content-card__icon">
-            {card.image_field?.src && (
-              <img
-                src={card.image_field.src}
-                width={card.image_field.width}
-                height={card.image_field.height}
-                alt={card.image_field.alt}
-                loading="lazy"
-              />
-            )}
-          </div>
-
+      <div className={`icon-content-cards ${uniqueClass}`}>
+        <div className="icon-content-cards__wrapper">
           <div
-            className="icon-content-card__title"
-            dangerouslySetInnerHTML={{ __html: card.heading_description }}
+            className="icon-content-cards__heading"
+            dangerouslySetInnerHTML={{ __html: fieldValues.main_heading?.heading || '' }}
           />
 
+          <Slider {...settings} className="icon-content-cards__cards">
+            {cards.map((card, index) => (
+              <div key={index}>
+                <div className="icon-content-card__items">
+                  <div className="icon-content-card__icon">
+                    {card.image_field?.src && (
+                      <img
+                        src={card.image_field.src}
+                        width={card.image_field.width}
+                        height={card.image_field.height}
+                        alt={card.image_field.alt || ''}
+                        loading="lazy"
+                      />
+                    )}
+                  </div>
+
+                  <div
+                    className="icon-content-card__title"
+                    dangerouslySetInnerHTML={{ __html: card.heading_description || '' }}
+                  />
+                </div>
+              </div>
+            ))}
+          </Slider>
         </div>
-      ))}
-
-    </div>
-  </div>
-</div>
-
-
+      </div>
     </>
   );
 };
+
+
+
 
 export { fields } from "./fields.js";
 
 export const meta = {
   label: "Icon Content Cards",
   css_assets: [],
-  external_js: [],
+ external_js: [],
   global: false,
   help_text: "",
   content_types: ["LANDING_PAGE", "SITE_PAGE"],
