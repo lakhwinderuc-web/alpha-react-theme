@@ -1,0 +1,37 @@
+/**
+*  These styles with the ".module" in the filename do make the classes unique
+*  and will be applied to the elements where they are included.
+*  Helpful to keep CSS from bleeding from one element to another.
+*/
+ /* .IconContentCards {
+padding: 100px 0;
+}
+.contentWrapper{
+max-width: 1280px;
+padding: 0 20px;
+margin: 0 auto;
+}
+    
+.mainHeading{
+text-align: center;
+    margin-bottom: 50px;
+}
+.mainHeading>*,.cardHeading>*{
+margin: 0;
+}
+.cardsRepeater{
+display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px ;
+}
+.iconInner {
+  margin-bottom: 30px;
+}
+.iconInner svg{
+height: 20px;
+}
+.cardItem{
+      padding: 25px;
+    border-radius: 10px;
+    border: 1px solid #051f46;
+} */
