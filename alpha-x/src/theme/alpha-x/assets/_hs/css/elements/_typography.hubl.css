@@ -89,14 +89,12 @@ h6,
   font-family: var(--hsElevate--display1__font);
   font-size: calc(var(--hsElevate--display1__fontSize) * var(--hsElevate--heading__tablet-modifier));
   font-style: normal;
-  font-weight: 400;
 }
 
 .hs-elevate-display-2 {
   font-family: var(--hsElevate--display2__font);
   font-size: calc(var(--hsElevate--display2__fontSize) * var(--hsElevate--heading__tablet-modifier));
   font-style: normal;
-  font-weight: 400;
 }
 
 h1,
