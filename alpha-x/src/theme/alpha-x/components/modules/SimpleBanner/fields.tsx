@@ -15,7 +15,7 @@ import mainBanner from "../../../images/main_banner.webp";
 
 export const fields = (
   <ModuleFields>
-    <FieldGroup name="customCss" label="Custom CSS">
+    <FieldGroup name="customCss" label="Custom Id/Class">
       <TextField
         name="customClass"
         label="Custom Class"
@@ -93,7 +93,7 @@ export const fields = (
           url: {
             content_id: null,
             type: "EXTERNAL",
-            href: "",
+            href: "https://accounts.google.com/",
           },
           open_in_new_tab: false,
           no_follow: false,
@@ -188,6 +188,32 @@ export const fields = (
         <GradientField
           name="gradient_field"
           label="Gradient"
+            default={{
+        colors: [
+          {
+            color: {
+              r: 0,
+              g: 0,
+              b: 0,
+              a: 1,
+            },
+          },
+          {
+            color: {
+              r: 255,
+              g: 255,
+              b: 255,
+              a: 1,
+            },
+          },
+        ],
+        side_or_corner: {
+          verticalSide: "BOTTOM",
+          horizontalSide: null,
+        },
+      }}
+
+
           visibility={{
             controlling_field_path: "style.background_field.background_type",
             operator: "EQUAL",

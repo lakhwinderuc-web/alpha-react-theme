@@ -1,8 +1,8 @@
 .BannerSection {
   width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+align-items: center;
+
 
   /* Desktop defaults */
   padding-top: var(--alphaBanner-paddingTop-desktop);
@@ -11,6 +11,12 @@
   padding-right: var(--alphaBanner-paddingRight-desktop);
   margin-top:var(--alphaBanner-marginTop-desktop);
   margin-bottom: var(--alphaBanner-marginBottom-desktop);
+
+  background-image: var(--alphaBanner-backgroundImage);
+  background-size: var(--alphaBanner-bgSize);
+  background-position: var(--alphaBanner-bgPosition);
+  background-repeat: no-repeat;
+  
 }
 
 /* Tablet */
@@ -31,4 +37,16 @@
     padding-left: var(--alphaBanner-paddingLeft-mobile);
     padding-right: var(--alphaBanner-paddingRight-mobile);
   }
+}
+
+.BannerButton a {
+  padding: var(--hsElevate--spacing--16) var(--hsElevate--spacing--24);
+}
+
+
+/* Disabled state */
+.BannerButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
