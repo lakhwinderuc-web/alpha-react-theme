@@ -134,8 +134,8 @@ default={{
   padding: {
     top: { value: 100, units: "px" },
     bottom: { value: 100, units: "px" },
-    left: { value: 20, units: "px" },
-    right: { value: 20, units: "px" },
+    left: { value: 0, units: "px" },
+    right: { value: 0, units: "px" },
   }
 }}
 />
@@ -152,8 +152,8 @@ default={{
   padding: {
     top: { value: 80, units: "px" },
     bottom: { value: 80, units: "px" },
-    left: { value: 20, units: "px" },
-    right: { value: 20, units: "px" },
+    left: { value: 0, units: "px" },
+    right: { value: 0, units: "px" },
   }
 }}
 />
@@ -171,8 +171,8 @@ default={{
   padding: {
     top: { value: 80, units: "px" },
     bottom: { value: 80, units: "px" },
-    left: { value: 20, units: "px" },
-    right: { value: 20, units: "px" },
+    left: { value: 0, units: "px" },
+    right: { value: 0, units: "px" },
   }
 }}
 />
