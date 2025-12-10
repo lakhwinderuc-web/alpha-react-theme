@@ -1,7 +1,9 @@
 html {
   font-size: var(--hsElevate--baseText__fontSize);
 }
-
+* {
+  box-sizing: border-box;
+}
 body {
   background-color: var(--hsElevate--section--lightSection--1__backgroundColor);
   color: var(--hsElevate--section--lightSection--1__textColor);
