@@ -7,6 +7,7 @@ export const Component = ({ fieldValues }) => {
   const cards = fieldValues.cards_repeat?.items || [];
   const reactId = useId();
   const uniqueClass = `module_${reactId.replace(/[^a-zA-Z0-9]/g, "")}`;
+  const sliderEnabled = fieldValues.slider_enable?.enable;
 
   // ---- Extract Dynamic Style Fields ----
   const ds = fieldValues.style?.spacing?.desktop?.desktop_spacing;
@@ -87,12 +88,8 @@ export const Component = ({ fieldValues }) => {
     `;
   }
 
-
-  
   return (
     <>
- 
-
       <style>
         {`
           .icon-content-cards.${uniqueClass} {
@@ -239,15 +236,40 @@ export const Component = ({ fieldValues }) => {
               __html: fieldValues.main_heading.heading,
             }}
           />
+          {sliderEnabled ? (
+            <Island
+              hydrateOn="load"
+              module={SpliderSlide}
+              moduleName="SpliderSlide"
+              clientOnly={true}
+              cards={cards} // passing repeater data to Splide
+            />
+          ) : (
+            <div className="icon-content-cards__cards no-slider">
+              {cards.map((card, index) => (
+                <div key={index} className="icon-content-card__items">
+                  <div className="icon-content-card__icon">
+                    {card.image_field?.src && (
+                      <img
+                        src={card.image_field.src}
+                        width={card.image_field.width}
+                        height={card.image_field.height}
+                        alt={card.image_field.alt || ""}
+                        loading="lazy"
+                      />
+                    )}
+                  </div>
 
-           <Island
-            hydrateOn="load"
-            module={SpliderSlide}
-            moduleName="SpliderSlide"
-            clientOnly={true}
-            cards={cards}          // passing repeater data to Splide
-          />
-          
+                  <div
+                    className="icon-content-card__title"
+                    dangerouslySetInnerHTML={{
+                      __html: card.heading_description || "",
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </>

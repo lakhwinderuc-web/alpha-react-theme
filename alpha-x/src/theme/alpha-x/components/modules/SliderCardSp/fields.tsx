@@ -28,7 +28,18 @@ export const fields = (
         default='<h2>Our Services</h2>'
       />
 </FieldGroup>
+<FieldGroup label='Slider Enable' name='slider_enable'>
+  <BooleanField
+      name="enable"
+      label="Enable/ Disable"
+      required={false}
+      locked={false}
+      display="toggle"
+      inlineHelpText="Slider Enable when toggled on"
+      default={true}
+    />
 
+</FieldGroup>
   <FieldGroup name="cards_repeat" label="Card Repeat">
   <RepeatedFieldGroup
     name="items"
