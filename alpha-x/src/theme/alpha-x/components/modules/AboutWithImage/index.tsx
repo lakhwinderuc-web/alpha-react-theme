@@ -4,6 +4,9 @@ import Counter from "./Island/Counter.js?island";
 import { useId } from "react";
 export const Component = ({ fieldValues }) => {
 
+  
+
+
     const reactId = useId();
   const uniqueClass = `module__${reactId.replace(/[^a-zA-Z0-9]/g, "")}`;
   // counter
@@ -206,7 +209,7 @@ ${backgroundCSS}
 `}
       </style>
 
-      <div id={customId} className={`about-with-image ${uniqueClass} ${customClass}`}>
+      <div  id={customId} className={`about-with-image ${uniqueClass} ${customClass}`}>
         <div className="about-with-image__wrapper content-wrapper">
           <div className="about-with-image__content">
             <div className="about-with-image__heading">

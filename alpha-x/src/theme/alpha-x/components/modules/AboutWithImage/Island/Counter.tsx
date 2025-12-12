@@ -1,32 +1,69 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
-function Counter({ value,sign,showSign,signPosition, duration = 1000 }) {
+function Counter({ value, sign, showSign, signPosition, duration = 1000 }) {
   const [count, setCount] = useState(0);
+  const [startCount, setStartCount] = useState(false);
+  const counterRef = useRef(null);
 
+  // IntersectionObserver inside the component
   useEffect(() => {
-    let start = 0;
-    const end = parseInt(value);
-    const stepTime = Math.abs(Math.floor(duration / end));
+    if (!counterRef.current) return;
 
-    const timer = setInterval(() => {
-      start += 1;
-      setCount(start);
-      if (start === end) clearInterval(timer);
-    }, stepTime);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting) {
+          setStartCount(true);  // trigger counting
+          observer.disconnect(); // stop observing
+        }
+      },
+      { threshold: 0.3 }
+    );
 
-    return () => clearInterval(timer);
-  }, [value, duration]);
+    observer.observe(counterRef.current);
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Log startCount whenever it changes
+  useEffect(() => {
+    console.log("startCount:", startCount);
+  }, [startCount]);
+
+  // Counting logic
+  useEffect(() => {
+    if (!startCount) return;
+
+    const end = parseInt(value || "0", 10);
+    if (end <= 0) {
+      setCount(end);
+      return;
+    }
+
+    const stepCount = Math.min(end, 100); // max 100 steps
+    const stepValue = end / stepCount;
+    const stepTime = duration / stepCount;
+
+    let currentStep = 0;
+
+    const updateCount = () => {
+      currentStep += 1;
+      setCount(Math.round(stepValue * currentStep));
+      if (currentStep < stepCount) {
+        setTimeout(updateCount, stepTime);
+      }
+    };
+
+    updateCount();
+  }, [value, duration, startCount]);
 
   let finalNumber = count;
-
-    if (showSign) {
+  if (showSign) {
     finalNumber =
-      signPosition === "sign-text"
-        ? `${sign}${count}`
-        : `${count}${sign}`;
+      signPosition === "sign-text" ? `${sign}${count}` : `${count}${sign}`;
   }
 
-  return <span>{finalNumber}</span>;
+  return <span ref={counterRef}>{finalNumber}</span>;
 }
 
 export default Counter;
