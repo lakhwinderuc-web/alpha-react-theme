@@ -108,7 +108,6 @@ export const Component = ({ fieldValues }) => {
 
  
 
-  // Button styling fields
  
 const desktopStyle = {
   paddingTop: ds?.padding?.top?.value + ds?.padding?.top?.units,

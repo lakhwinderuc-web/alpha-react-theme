@@ -1,28 +1,38 @@
 import { Island, RichText } from "@hubspot/cms-components";
-import SlickSlider from "./Island/SlickSlider.js?island";
 import { useId } from "react";
-
+import testimonialSlider from "./Island/testimonialSlider.js?island";
+import testimonalbg from"../../../images/testimonial bg.webp"
 
 export const Component = ({ fieldValues }) => {
-const reactId=useId();
-const uniqueClass = `module_${reactId.replace(/[^a-zA-Z0-9]/g, "")}`;
-  const customClass = fieldValues?.customCss?.customClass;
-  const customId = fieldValues?.customCss?.customId;
+  const reactId=useId();
+  const uniqueClass = `module_${reactId.replace(/[^a-zA-Z0-9]/g, "")}`;
 
-  const logos = fieldValues?.logoSlider?.logoGroup;
-  const sliderEnable=fieldValues?.style?.sliderSettings.sliderEnable;
+  const customClass = fieldValues?.customCss?.customClass ||"New";
+  const customId = fieldValues?.customCss?.customId || "New";
+  const bgimg=fieldValues?.backgroundImage?.bgImage;
+  const testmonials = fieldValues?.headingGroup?.testimonialField;
+  const testimonialText =
+  fieldValues?.headingGroup?.testimonialField?.[0]?.testimonialText;
+
+const authorName =
+  fieldValues?.headingGroup?.testimonialField?.[0]?.authorName;
+
+   const sliderEnable=fieldValues?.style?.sliderSettings.sliderEnable;
   const slideToShow=fieldValues?.style?.sliderSettings.slidesToShow;
   const slidesToScroll=fieldValues?.style?.sliderSettings.slidesToScroll;
   const autoPlay=fieldValues?.style?.sliderSettings?.autoPlay;
   const autoPlaySpeed=fieldValues?.style?.sliderSettings?.autoPlaySpeed;
   const sliderDots=fieldValues?.style?.sliderSettings?.sliderDots;
   const sliderArrows=fieldValues?.style?.sliderSettings?.sliderArrows;
-  // console.log(logos);
-  // console.log("slideToShow",slideToShow)
-  // console.log("slideToScroll",slidesToScroll);
-  console.log("autoplay",autoPlay)
+  console.log(testimonialText)
+  console.log(sliderEnable)
+
+const topBg = {
+  backgroundImage: `url(${bgimg.src})`,
+};
 
 
+  
 
   const ds = fieldValues.style?.spacing?.desktop?.desktop_spacing || {};
 const desktopStyle = {
@@ -103,8 +113,10 @@ if (bg?.background_type === "bg_image" && bg?.bg_image) {
   return (
     <>
       <style>
-{`
-  .content-with-slider.${uniqueClass} {
+
+        {`
+        
+         .bg-image-with-slider.${uniqueClass} {
   ${backgroundCSS}
           padding-top: ${desktopStyle.paddingTop};
           padding-bottom: ${desktopStyle.paddingBottom};
@@ -112,7 +124,7 @@ if (bg?.background_type === "bg_image" && bg?.bg_image) {
           padding-right: ${desktopStyle.paddingRight};
         }
             @media(max-width:1024px) {
-          .content-with-slider.${uniqueClass} {
+          .bg-image-with-slider.${uniqueClass} {
             padding-top: ${tabletStyle.paddingTop};
             padding-bottom: ${tabletStyle.paddingBottom};
             padding-left: ${tabletStyle.paddingLeft};
@@ -121,94 +133,61 @@ if (bg?.background_type === "bg_image" && bg?.bg_image) {
             }
  @media(max-width:767px) {
          
-          .content-with-slider.${uniqueClass} {
+          .bg-image-with-slider.${uniqueClass} {
             padding-top: ${mobileStyle.paddingTop};
             padding-bottom: ${mobileStyle.paddingBottom};
             padding-left: ${mobileStyle.paddingLeft};
             padding-right: ${mobileStyle.paddingRight};
           }
         }
-
-        /* Parent wrapper that contains all .content-with-slider__logo-img items */
-.content-with-slider__logo-wrapper {
- display: inline-flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: 40px;        /* adjust spacing */
-  overflow-x: auto; /* optional: scroll if logos overflow */       /* hide overflow if items exceed width */
-}
-
-/* Each logo item */
-.content-with-slider__logo-img {
-  flex: 0 0 auto;              /* do not grow or shrink — fixed basis set by width */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-}
-
-/* The image itself — keep aspect ratio and avoid distortion */
-.content-with-slider__logo-img img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;         /* ensures the full logo fits inside the box */
-  display: block;
-}
-
-
-`}
+        
+        
+        .bg-image-with-slider__testimonial-main{
+      background:rgba(40, 39, 39, 100%);
+      color:#fff;
+      text-align:center;
+      }
+  
+  .bg-image-with-slider__bg-top-img{
+      width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding-top: 200px;
+    padding-right: 15px;
+    padding-bottom: 200px;
+    padding-left: 15px;}
+      `}
       </style>
-      <div id={customId} className={`content-with-slider ${uniqueClass} ${customClass}`}>
-        <div className="content-with-slider__wrapper content-wrapper">
-          <div className="content-with-slider__content">
-            <div className="content-with-slider__heading">
-              <RichText fieldPath="headingGroup.headingTitle" />
-              <RichText fieldPath="headingGroup.headingTitlePara" />
-            {
-  sliderEnable ? (
-    <Island
-      hydrateOn="load"
-      module={SlickSlider}
-      moduleName="SlickSlider"
-      clientOnly={true}
-      logos={logos}
-      slideToShow={slideToShow}
-      slidesToScroll={slidesToScroll}
-      autoPlay={autoPlay}  // autoplay logic handled inside SlickSlider
-      autoPlaySpeed={autoPlaySpeed}
-      sliderDots={sliderDots}
-      sliderArrows={sliderArrows}
+      <div id={customId} className={`bg-image-with-slider ${uniqueClass} ${customClass}`}>
+        <div className="bg-image-with-slider__testimonial-slider ">
+          <div className="bg-image-with-slider__wrapper">
+            <div className={`bg-image-with-slider__bg-top-img `} style={topBg}/>
+            <div className="bg-image-with-slider__testimonial-main" >
+              <RichText className="bg-image-with-slider__testimonial-heading" fieldPath="headingGroup.topHeading"/>
+              {sliderEnable?(<Island
+                hydrateOn="load"
+                module={testimonialSlider}
+                moduleName="testimonialSlider"
+                clientOnly={true}
+                items={testmonials}
+                sliderEnable={sliderEnable}
+                slideToShow={slideToShow}
+                slidesToScroll={slidesToScroll}
+                autoPlay={autoPlay}
+                autoPlaySpeed={autoPlaySpeed}
+                sliderDots={sliderDots}
+                sliderArrows={sliderArrows}
 
+              />):(<div  className='bg-image-with-slider__content'>
+<div dangerouslySetInnerHTML={{__html:testimonialText}}/>
+<div dangerouslySetInnerHTML={{__html:authorName}}/>
 
-    />
-  ) : (
-    <>
-     {logos?.map((logo, index) => {
-  const image =
-    logo?.LogoSliderImage?.logoImg ||
-    logo?.logo_slider?.logo_image ||   // add this if real structure
-    logo?.logo_slider ||               // fallback
-    null;
-
-  const src = image?.src || "";
-  const alt = image?.alt || "logo";
-
-  return (
-    <div  key={index} className="content-with-slider__logo-wrapper">
-      <div className="content-with-slider__logo-img">
-        <img src={src} alt={alt} loading="lazy" />
-      </div>
-    </div>
-  );
-})}
-    </>
-  )
-}
+    </div>)}
+              
+            </div>
           </div>
         </div>
-      </div>
       </div>
     </>
   );
@@ -217,7 +196,7 @@ if (bg?.background_type === "bg_image" && bg?.bg_image) {
 export { fields } from "./fields.js";
 
 export const meta = {
-  label: "Content With Logo Slider",
+  label: "Bg image With Testimonial",
   css_assets: [],
   external_js: [],
   global: false,
