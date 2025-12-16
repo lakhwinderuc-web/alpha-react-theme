@@ -11,12 +11,12 @@ import {
   ChoiceField,
   BackgroundImageField,
   ColorField,
-  GradientField
+  GradientField,
 } from "@hubspot/cms-components/fields";
 
 export const fields = (
   <ModuleFields>
-    <FieldGroup name="customCss" label="Custom Class | Id">
+    <FieldGroup name="customCss" label="Custom | Class & ID">
       <TextField
         name="customClass"
         label="Custom Class"
@@ -33,7 +33,7 @@ export const fields = (
         default=""
       />
     </FieldGroup>
-    <FieldGroup name="backgroundImage" label="background Image">
+    <FieldGroup name="backgroundImage" label="Background Image">
       <ImageField
         name="bgImage"
         label="image"
@@ -63,293 +63,257 @@ export const fields = (
         label="Testimonial"
         occurrence={{ min: 1, default: 3 }}
         default={[
-      {
-        testimonialText:
-          '<p><span style="color:#ffffff;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed enim nunc, dictum eu pharetra et, consequat ut odio.</span></p>',
-        authorName:
-          '<p><span style="color:#ffffff;">__Lorem ipsum dolor</span> / <span style="color:#ffffff;">Lorem ipsum dolor sit</span></p>',
-      },
-      {
-        testimonialText:
-          '<p><span style="color:#ffffff;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed enim nunc, dictum eu pharetra et, consequat ut odio.</span></p>',
-        authorName:
-          '<p><span style="color:#ffffff;">__Lorem ipsum dolor</span> / <span style="color:#ffffff;">Lorem ipsum dolor sit</span></p>',
-      },
-      {
-        testimonialText:
-          '<p><span style="color:#ffffff;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed enim nunc, dictum eu pharetra et, consequat ut odio.</span></p>',
-        authorName:
-          '<p><span style="color:#ffffff;">__Lorem ipsum dolor</span> / <span style="color:#ffffff;">Lorem ipsum dolor sit</span></p>',
-      },
-      {
-        testimonialText:
-          '<p><span style="color:#ffffff;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed enim nunc, dictum eu pharetra et, consequat ut odio.</span></p>',
-        authorName:
-          '<p><span style="color:#ffffff;">__Lorem ipsum dolor</span> / <span style="color:#ffffff;">Lorem ipsum dolor sit</span></p>',
-      },
-    ]}
+          {
+            testimonialText:
+              '<p><span style="color:#ffffff;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed enim nunc, dictum eu pharetra et, consequat ut odio.</span></p>',
+            authorName:
+              '<p><span style="color:#ffffff;">__Lorem ipsum dolor</span> / <span style="color:#ffffff;">Lorem ipsum dolor sit</span></p>',
+          },
+          {
+            testimonialText:
+              '<p><span style="color:#ffffff;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed enim nunc, dictum eu pharetra et, consequat ut odio.</span></p>',
+            authorName:
+              '<p><span style="color:#ffffff;">__Lorem ipsum dolor</span> / <span style="color:#ffffff;">Lorem ipsum dolor sit</span></p>',
+          },
+          {
+            testimonialText:
+              '<p><span style="color:#ffffff;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed enim nunc, dictum eu pharetra et, consequat ut odio.</span></p>',
+            authorName:
+              '<p><span style="color:#ffffff;">__Lorem ipsum dolor</span> / <span style="color:#ffffff;">Lorem ipsum dolor sit</span></p>',
+          },
+          {
+            testimonialText:
+              '<p><span style="color:#ffffff;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed enim nunc, dictum eu pharetra et, consequat ut odio.</span></p>',
+            authorName:
+              '<p><span style="color:#ffffff;">__Lorem ipsum dolor</span> / <span style="color:#ffffff;">Lorem ipsum dolor sit</span></p>',
+          },
+        ]}
       >
         <RichTextField name="testimonialText" label="Add Testimonial" />
-        <RichTextField  name="authorName" label="Author Name"/>
+        <RichTextField name="authorName" label="Author Name" />
       </RepeatedFieldGroup>
     </FieldGroup>
 
     <FieldGroup name="style" label="Style Tab" tab="STYLE">
+      {/* Section Spacing */}
+      <FieldGroup name="spacing" label="Spacing">
+        {/*  Desktop */}
+        <FieldGroup name="desktop" label="Desktop">
+          <SpacingField
+            name="desktop_spacing"
+            label="Spacing"
+            required={false}
+            default={{
+              padding: {
+                top: { value: 100, units: "px" },
+                bottom: { value: 100, units: "px" },
+                left: { value: 0, units: "px" },
+                right: { value: 0, units: "px" },
+              },
+            }}
+          />
+        </FieldGroup>
+        {/* end Desktop */}
 
-     <FieldGroup name="sliderSettings" label="Slider Settings">
-            <BooleanField
-              name="sliderEnable"
-              label="Enable/ Disable"
-              required={false}
-              locked={false}
-              display="toggle"
-              inlineHelpText="Slider Enable when toggled on"
-              default={true}
-            />
-            <BooleanField
-              name="autoPlay"
-              label="Autoplay"
-              default={true}
-              display="toggle"
-              visibility={{
-                controlling_field_path: "style.sliderSettings.sliderEnable",
-                operator: "EQUAL",
-                controlling_value_regex: "true",
-              }}
-            />
-              <NumberField
-              name="autoPlaySpeed"
-              label="Autoplay Speed"
-              required={false}
-              default={700}
-              min={100}
-              max={10000}
-              visibility={{
-                controlling_field_path: "style.sliderSettings.autoPlay",
-                operator: "EQUAL",
-                controlling_value_regex: "true",
-              }}
-            />
-            <NumberField
-              name="slidesToShow"
-              label="Slides To Show"
-              required={false}
-              default={1}
-              min={1}
-              visibility={{
-                controlling_field_path: "style.sliderSettings.sliderEnable",
-                operator: "EQUAL",
-                controlling_value_regex: "true",
-              }}
-            />
-            <NumberField
-              name="slidesToScroll"
-              label="Slides To Scroll"
-              required={false}
-              default={1}
-              min={1}
-              visibility={{
-                controlling_field_path: "style.sliderSettings.sliderEnable",
-                operator: "EQUAL",
-                controlling_value_regex: "true",
-              }}
-            />
-          
-            <BooleanField
-              name="sliderDots"
-              label="Enable/Disable Dots"
-              default={true}
-              visibility={{
-                controlling_field_path: "style.sliderSettings.sliderEnable",
-                operator: "EQUAL",
-                controlling_value_regex: "true",
-              }}
-            />
-             <BooleanField
-              name="sliderArrows"
-              label="Enable/Disable Arrows"
-              default={true}
-              visibility={{
-                controlling_field_path: "style.sliderSettings.sliderEnable",
-                operator: "EQUAL",
-                controlling_value_regex: "true",
-              }}
-            />
-          </FieldGroup>
-          
+        {/* Tablet */}
+        <FieldGroup name="tablet" label="Tablet">
+          <SpacingField
+            name="tablet_spacing"
+            label="Spacing"
+            required={false}
+            default={{
+              padding: {
+                top: { value: 80, units: "px" },
+                bottom: { value: 80, units: "px" },
+                left: { value: 0, units: "px" },
+                right: { value: 0, units: "px" },
+              },
+            }}
+          />
+        </FieldGroup>
+        {/* end  Tablet */}
 
-{/* Section Spacing */}
-<FieldGroup name='spacing' label='Spacing'>
+        {/*  Mobile */}
+        <FieldGroup name="mobile" label="Mobile">
+          <SpacingField
+            name="mobile_spacing"
+            label="Spacing"
+            required={false}
+            default={{
+              padding: {
+                top: { value: 80, units: "px" },
+                bottom: { value: 80, units: "px" },
+                left: { value: 0, units: "px" },
+                right: { value: 0, units: "px" },
+              },
+            }}
+          />
+        </FieldGroup>
+        {/* end Mobile */}
+      </FieldGroup>
+      {/* end */}
 
-    {/*  Desktop */}
-<FieldGroup name='desktop' label='Desktop'>
-<SpacingField
-name="desktop_spacing"
-label="Spacing"
-required={false}
-default={{
-  padding: {
-    top: { value: 100, units: "px" },
-    bottom: { value: 100, units: "px" },
-    left: { value: 0, units: "px" },
-    right: { value: 0, units: "px" },
-  }
-}}
-/>
-</FieldGroup>
-    {/* end Desktop */}
-    
-    {/* Tablet */}
-<FieldGroup name='tablet' label='Tablet'>
-<SpacingField
-name="tablet_spacing"
-label="Spacing"
-required={false}
-default={{
-  padding: {
-    top: { value: 80, units: "px" },
-    bottom: { value: 80, units: "px" },
-    left: { value: 0, units: "px" },
-    right: { value: 0, units: "px" },
-  }
-}}
-/>
-
-</FieldGroup>
-    {/* end  Tablet */}
-
-    {/*  Mobile */}
-<FieldGroup name='mobile' label='Mobile'>
-<SpacingField
-name="mobile_spacing"
-label="Spacing"
-required={false}
-default={{
-  padding: {
-    top: { value: 80, units: "px" },
-    bottom: { value: 80, units: "px" },
-    left: { value: 0, units: "px" },
-    right: { value: 0, units: "px" },
-  }
-}}
-/>
-
-</FieldGroup>
-    {/* end Mobile */}
-
-</FieldGroup>
-{/* end */}
-
-
-<FieldGroup name='background' label='Background'>
-   <ChoiceField
-      name="background_type"
-      label="Background Type"
-      required={false}
-      locked={false}
-      multiple={false}
-      display="select"
-      choices={[
-        ["bg_image", "Background Image"],
-        ["bg_color", "Background Color"]
-      ]}
-      default="bg_color"
-    />
-    <BackgroundImageField
-      name="bg_image"
-      label="Background image"
-      required={false}
-      default={{
-        src: "",
-        background_position: "MIDDLE_CENTER",
-        background_size: "COVER"
-      }}
-      visibility={{
-            controlling_field_path: 'style.background.background_type',
-            operator: 'EQUAL',
-            controlling_value_regex: 'bg_image',
+      <FieldGroup name="background" label="Background">
+        <ChoiceField
+          name="background_type"
+          label="Background Type"
+          required={false}
+          locked={false}
+          multiple={false}
+          display="select"
+          choices={[
+            ["bg_image", "Background Image"],
+            ["bg_color", "Background Color"],
+          ]}
+          default="bg_color"
+        />
+        <BackgroundImageField
+          name="bg_image"
+          label="Background image"
+          required={false}
+          default={{
+            src: "",
+            background_position: "MIDDLE_CENTER",
+            background_size: "COVER",
           }}
-    />
- <BooleanField
-      name="overlay"
-      label="Overlay Enable"
-      required={false}
-      locked={false}
-      display="checkbox"
-      inlineHelpText="Shows Overlay when toggled on"
-      helpText=""
-      default={false}
-    />
+          visibility={{
+            controlling_field_path: "style.background.background_type",
+            operator: "EQUAL",
+            controlling_value_regex: "bg_image",
+          }}
+        />
+        <BooleanField
+          name="overlay"
+          label="Overlay Enable"
+          required={false}
+          locked={false}
+          display="checkbox"
+          inlineHelpText="Shows Overlay when toggled on"
+          helpText=""
+          default={false}
+        />
 
-      <FieldGroup name='bg_overlay' label='Overlay Color'
-     visibility={{
-            controlling_field_path: 'style.background.overlay',
-            operator: 'EQUAL',
-            controlling_value_regex: 'true',
-          }} >
-  <ColorField
-      name="overlay_color"
-      label="Overlay color"
-      required={false}
-      locked={false}
-      default={{
-        color: "#000000",
-        opacity: 100
-      }}
-    />
-    <NumberField
-  name="opacity"
-  label="Background Opacity (%)"
-  required={false}
-  locked={false}
-  display="slider"
-  min={0}      
-  max={100}   
-  step={1}   
-   suffix="%"   
-  default={50}   
-  placeholder="50"
-/>
+        <FieldGroup
+          name="bg_overlay"
+          label="Overlay Color"
+          visibility={{
+            controlling_field_path: "style.background.overlay",
+            operator: "EQUAL",
+            controlling_value_regex: "true",
+          }}
+        >
+          <ColorField
+            name="overlay_color"
+            label="Overlay color"
+            required={false}
+            locked={false}
+            default={{
+              color: "#000000",
+              opacity: 100,
+            }}
+          />
+          <NumberField
+            name="opacity"
+            label="Background Opacity (%)"
+            required={false}
+            locked={false}
+            display="slider"
+            min={0}
+            max={100}
+            step={1}
+            suffix="%"
+            default={50}
+            placeholder="50"
+          />
+        </FieldGroup>
+
+        <GradientField
+          name="bg_gradient"
+          label="Background gradient"
+          helpText="Sets a gradient behind the content"
+          required={false}
+          default={{
+            colors: [
+              {
+                color: {
+                  r: "255",
+                  g: "255",
+                  b: "255",
+                  a: 1,
+                },
+              },
+              {
+                color: {
+                  r: "255",
+                  g: "255",
+                  b: "255",
+                  a: 1,
+                },
+              },
+            ],
+            side_or_corner: {
+              verticalSide: "BOTTOM",
+              horizontalSide: null,
+            },
+          }}
+          visibility={{
+            controlling_field_path: "style.background.background_type",
+            operator: "EQUAL",
+            controlling_value_regex: "bg_color",
+          }}
+        />
       </FieldGroup>
 
- <GradientField
-  name="bg_gradient"
-  label="Background gradient"
-  helpText="Sets a gradient behind the content"
-  required={false}
-  default={{
-    colors: [
-      {
-        color: {
-          r: "255",
-          g: "255",
-          b: "255",
-          a: 1,
-        },
-      },
-      {
-        color: {
-          r: "255",
-          g: "255",
-          b: "255",
-          a: 1,
-        },
-      },
-    ],
-    side_or_corner: {
-      verticalSide: "BOTTOM",
-      horizontalSide: null,
-    },
-  }}
-  visibility={{
-    controlling_field_path: "style.background.background_type",
-    operator: "EQUAL",
-    controlling_value_regex: "bg_color",
-  }}
-/>
-
-
-</FieldGroup>
-</FieldGroup>
+      <FieldGroup name="sliderSettings" label="Slider Settings">
+        <FieldGroup name="arrowStyle" label="Arrow Styling">
+          <ColorField
+          name="bgColor"
+          label="bg Color"
+          default={{
+            color: "#000000",
+            opacity: 100,
+          }}
+        />
+        <ColorField
+        name="iconColor" label="Icon Color" default={{
+            color: "#000000",
+            opacity: 100,
+          }}/>
+          
+          </FieldGroup>
+          <FieldGroup name="dotStyle" label="Dot Styling">
+<ColorField name="dotColor" label="Dot color" default={{
+            color: "#000000",
+            opacity: 100,
+          }}/>
+          <ColorField name="activeDotColor" label="Active color" default={{
+            color: "#000000",
+            opacity: 100,
+          }}/>
+          </FieldGroup>
+        <FieldGroup name="autoPlaySettings" label="Autoplay Settings">
+        <BooleanField
+          name="autoPlay"
+          label="Autoplay"
+          default={true}
+          display="toggle"
+     
+        />
+        <NumberField
+          name="autoPlaySpeed"
+          label="Autoplay Speed"
+          required={false}
+          default={3000}
+          min={1000}
+          max={12000}
+          visibility={{
+            controlling_field_path: "style.sliderSettings.autoPlaySettings.autoPlay",
+            operator: "EQUAL",
+            controlling_value_regex: "true",
+          }}
+        />
+        </FieldGroup>
+      </FieldGroup>
+    </FieldGroup>
   </ModuleFields>
 );

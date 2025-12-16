@@ -76,8 +76,7 @@ function resolveLink(linkField) {
 
  const customClass = fieldValues?.customCss?.customClass;
   const customId = fieldValues?.customCss?.customId;
-  console.log("customClass",customClass);
-  console.log("customId",customId)
+
 
   // theme button styling
   const selectedButtonType = fieldValues?.buttonGroup.buttonChoice;

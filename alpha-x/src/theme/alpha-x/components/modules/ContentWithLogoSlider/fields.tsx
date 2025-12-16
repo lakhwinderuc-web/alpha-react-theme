@@ -122,12 +122,12 @@ export const fields = (
           locked={false}
           display="toggle"
           inlineHelpText="Slider Enable when toggled on"
-          default={false}
+          default={true}
         />
         <BooleanField
           name="autoPlay"
           label="Autoplay"
-          default={false}
+          default={true}
           display="toggle"
           visibility={{
             controlling_field_path: "style.sliderSettings.sliderEnable",
@@ -139,7 +139,7 @@ export const fields = (
           name="autoPlaySpeed"
           label="Autoplay Speed"
           required={false}
-          default={500}
+          default={2000}
           min={500}
           max={10000}
           visibility={{

@@ -2,20 +2,31 @@ import React from 'react'
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-const testimonialSlider = ({items,slideToShow,slidesToScroll,sliderDots,autoPlay,autoPlaySpeed,sliderArrows,sliderEnable}) => {
+const testimonialSlider = ({items,autoPlay,autoPlaySpeed}) => {
   
    var settings = {
- dots: sliderDots,
+ dots: true,
   infinite: true,
-  arrows: sliderArrows,
+  arrows: false,
   speed: 1000,                
   cssEase: "ease-in-out",    
-  slidesToShow: slideToShow,
-  slidesToScroll: slidesToScroll,
+  slidesToShow: 1,
+  slidesToScroll: 1,
   autoplay: autoPlay,          
   autoplaySpeed: autoPlaySpeed,    
   pauseOnHover: true,  
   pauseOnFocus: true,
+  
+responsive: [
+    {
+      breakpoint: 580,
+      settings: {
+       dots: false,
+  infinite: true,
+  arrows: true
+      }
+    }
+  ]
   };
   return (
   

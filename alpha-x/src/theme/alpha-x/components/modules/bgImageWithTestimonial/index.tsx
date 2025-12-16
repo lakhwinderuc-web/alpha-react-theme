@@ -1,119 +1,135 @@
 import { Island, RichText } from "@hubspot/cms-components";
 import { useId } from "react";
 import testimonialSlider from "./Island/testimonialSlider.js?island";
-import testimonalbg from"../../../images/testimonial bg.webp"
 
 export const Component = ({ fieldValues }) => {
-  const reactId=useId();
+  const reactId = useId();
   const uniqueClass = `module_${reactId.replace(/[^a-zA-Z0-9]/g, "")}`;
 
-  const customClass = fieldValues?.customCss?.customClass ||"New";
+  const customClass = fieldValues?.customCss?.customClass || "New";
   const customId = fieldValues?.customCss?.customId || "New";
-  const bgimg=fieldValues?.backgroundImage?.bgImage;
+  const bgimg = fieldValues?.backgroundImage?.bgImage;
   const testmonials = fieldValues?.headingGroup?.testimonialField;
-  const testimonialText =
-  fieldValues?.headingGroup?.testimonialField?.[0]?.testimonialText;
-
-const authorName =
-  fieldValues?.headingGroup?.testimonialField?.[0]?.authorName;
-
-   const sliderEnable=fieldValues?.style?.sliderSettings.sliderEnable;
-  const slideToShow=fieldValues?.style?.sliderSettings.slidesToShow;
-  const slidesToScroll=fieldValues?.style?.sliderSettings.slidesToScroll;
-  const autoPlay=fieldValues?.style?.sliderSettings?.autoPlay;
-  const autoPlaySpeed=fieldValues?.style?.sliderSettings?.autoPlaySpeed;
-  const sliderDots=fieldValues?.style?.sliderSettings?.sliderDots;
-  const sliderArrows=fieldValues?.style?.sliderSettings?.sliderArrows;
-  console.log(testimonialText)
-  console.log(sliderEnable)
-
-const topBg = {
-  backgroundImage: `url(${bgimg.src})`,
-};
-
-
   
 
+  const autoPlay = fieldValues?.style?.sliderSettings?.autoPlaySettings?.autoPlay;
+  const autoPlaySpeed = fieldValues?.style?.sliderSettings?.autoPlaySettings?.autoPlaySpeed;
+
+// slider arrows and dots
+const arrowBg=fieldValues?.style?.sliderSettings?.arrowStyle?.bgColor;
+const arrowColor=fieldValues?.style?.sliderSettings?.arrowStyle?.iconColor;
+const dotColor=fieldValues?.style?.sliderSettings?.dotStyle?.dotColor;
+const activeColor=fieldValues?.style?.sliderSettings?.dotStyle?.activeDotColor;
+
+// colors in arrows and dots
+const hsColor = (c) => {
+  if (!c?.color) return "inherit";
+
+  const hex = c.color.replace("#", "");
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
+  const a = (c.opacity ?? 100) / 100;
+
+  return `rgba(${r}, ${g}, ${b}, ${a})`;
+};
+
+  const topBg = {
+    backgroundImage: `url(${bgimg.src})`,
+  };
+
   const ds = fieldValues.style?.spacing?.desktop?.desktop_spacing || {};
-const desktopStyle = {
-  paddingTop: (ds.padding?.top?.value || 0) + (ds.padding?.top?.units || 'px'),
-  paddingBottom: (ds.padding?.bottom?.value || 0) + (ds.padding?.bottom?.units || 'px'),
-  paddingLeft: (ds.padding?.left?.value || 0) + (ds.padding?.left?.units || 'px'),
-  paddingRight: (ds.padding?.right?.value || 0) + (ds.padding?.right?.units || 'px'),
-};
+  const desktopStyle = {
+    paddingTop:
+      (ds.padding?.top?.value || 0) + (ds.padding?.top?.units || "px"),
+    paddingBottom:
+      (ds.padding?.bottom?.value || 0) + (ds.padding?.bottom?.units || "px"),
+    paddingLeft:
+      (ds.padding?.left?.value || 0) + (ds.padding?.left?.units || "px"),
+    paddingRight:
+      (ds.padding?.right?.value || 0) + (ds.padding?.right?.units || "px"),
+  };
 
-const ts = fieldValues.style?.spacing?.tablet?.tablet_spacing || {};
-const tabletStyle = {
-  paddingTop: (ts.padding?.top?.value || 0) + (ts.padding?.top?.units || 'px'),
-  paddingBottom: (ts.padding?.bottom?.value || 0) + (ts.padding?.bottom?.units || 'px'),
-  paddingLeft: (ts.padding?.left?.value || 0) + (ts.padding?.left?.units || 'px'),
-  paddingRight: (ts.padding?.right?.value || 0) + (ts.padding?.right?.units || 'px'),
-};
+  const ts = fieldValues.style?.spacing?.tablet?.tablet_spacing || {};
+  const tabletStyle = {
+    paddingTop:
+      (ts.padding?.top?.value || 0) + (ts.padding?.top?.units || "px"),
+    paddingBottom:
+      (ts.padding?.bottom?.value || 0) + (ts.padding?.bottom?.units || "px"),
+    paddingLeft:
+      (ts.padding?.left?.value || 0) + (ts.padding?.left?.units || "px"),
+    paddingRight:
+      (ts.padding?.right?.value || 0) + (ts.padding?.right?.units || "px"),
+  };
 
-const ms = fieldValues.style?.spacing?.mobile?.mobile_spacing || {};
-const mobileStyle = {
-  paddingTop: (ms.padding?.top?.value || 0) + (ms.padding?.top?.units || 'px'),
-  paddingBottom: (ms.padding?.bottom?.value || 0) + (ms.padding?.bottom?.units || 'px'),
-  paddingLeft: (ms.padding?.left?.value || 0) + (ms.padding?.left?.units || 'px'),
-  paddingRight: (ms.padding?.right?.value || 0) + (ms.padding?.right?.units || 'px'),
-};
+  const ms = fieldValues.style?.spacing?.mobile?.mobile_spacing || {};
+  const mobileStyle = {
+    paddingTop:
+      (ms.padding?.top?.value || 0) + (ms.padding?.top?.units || "px"),
+    paddingBottom:
+      (ms.padding?.bottom?.value || 0) + (ms.padding?.bottom?.units || "px"),
+    paddingLeft:
+      (ms.padding?.left?.value || 0) + (ms.padding?.left?.units || "px"),
+    paddingRight:
+      (ms.padding?.right?.value || 0) + (ms.padding?.right?.units || "px"),
+  };
 
-const bg = fieldValues.style?.background;
-let backgroundCSS = "";
+  const bg = fieldValues.style?.background;
+  let backgroundCSS = "";
 
-// gradient background
-if (bg?.background_type === "bg_color" && bg?.bg_gradient) {
-  const vertical = bg.bg_gradient.side_or_corner?.verticalSide;
-  const horizontal = bg.bg_gradient.side_or_corner?.horizontalSide;
+  // gradient background
+  if (bg?.background_type === "bg_color" && bg?.bg_gradient) {
+    const vertical = bg.bg_gradient.side_or_corner?.verticalSide;
+    const horizontal = bg.bg_gradient.side_or_corner?.horizontalSide;
 
-  let direction = "to bottom";
-  if (vertical && horizontal) {
-    direction = `to ${vertical.toLowerCase()} ${horizontal.toLowerCase()}`;
-  } else if (vertical) {
-    direction = vertical.toLowerCase() === "top" ? "to top" : "to bottom";
-  } else if (horizontal) {
-    direction = horizontal.toLowerCase() === "left" ? "to left" : "to right";
-  }
+    let direction = "to bottom";
+    if (vertical && horizontal) {
+      direction = `to ${vertical.toLowerCase()} ${horizontal.toLowerCase()}`;
+    } else if (vertical) {
+      direction = vertical.toLowerCase() === "top" ? "to top" : "to bottom";
+    } else if (horizontal) {
+      direction = horizontal.toLowerCase() === "left" ? "to left" : "to right";
+    }
 
-  const rgbaColors = bg.bg_gradient.colors.map(c => {
-    const col = c.color;
-    return `rgba(${col.r}, ${col.g}, ${col.b}, ${col.a})`;
-  });
+    const rgbaColors = bg.bg_gradient.colors.map((c) => {
+      const col = c.color;
+      return `rgba(${col.r}, ${col.g}, ${col.b}, ${col.a})`;
+    });
 
-  backgroundCSS = `
+    backgroundCSS = `
     background: linear-gradient(
       ${direction},
       ${rgbaColors.join(", ")}
     );
   `;
-}
+  }
 
-// background image
-if (bg?.background_type === "bg_image" && bg?.bg_image) {
-  const positionMap = {
-    TOP_LEFT: "top left",
-    TOP_CENTER: "top center",
-    TOP_RIGHT: "top right",
-    MIDDLE_LEFT: "center left",
-    MIDDLE_CENTER: "center center",
-    MIDDLE_RIGHT: "center right",
-    BOTTOM_LEFT: "bottom left",
-    BOTTOM_CENTER: "bottom center",
-    BOTTOM_RIGHT: "bottom right",
-  };
+  // background image
+  if (bg?.background_type === "bg_image" && bg?.bg_image) {
+    const positionMap = {
+      TOP_LEFT: "top left",
+      TOP_CENTER: "top center",
+      TOP_RIGHT: "top right",
+      MIDDLE_LEFT: "center left",
+      MIDDLE_CENTER: "center center",
+      MIDDLE_RIGHT: "center right",
+      BOTTOM_LEFT: "bottom left",
+      BOTTOM_CENTER: "bottom center",
+      BOTTOM_RIGHT: "bottom right",
+    };
 
-  const bgPos = positionMap[bg.bg_image.background_position] || "center center";
-  backgroundCSS = `
+    const bgPos =
+      positionMap[bg.bg_image.background_position] || "center center";
+    backgroundCSS = `
     background-image: url(${bg.bg_image.src});
     background-size: ${bg.bg_image.background_size};
     background-position: ${bgPos};
   `;
-}
+  }
 
   return (
     <>
       <style>
-
         {`
         
          .bg-image-with-slider.${uniqueClass} {
@@ -140,8 +156,30 @@ if (bg?.background_type === "bg_image" && bg?.bg_image) {
             padding-right: ${mobileStyle.paddingRight};
           }
         }
-        
-        
+
+        /* Slick Arrow Styling */
+.bg-image-with-slider.${uniqueClass} .slick-arrow {
+  background: ${hsColor(arrowBg)};
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.bg-image-with-slider.${uniqueClass} .slick-arrow::before {
+  color: ${hsColor(arrowColor)};
+  font-size: 16px;
+}
+
+/* Slick Dot Styling */
+.bg-image-with-slider.${uniqueClass} .slick-dots li button:before {
+  color: ${hsColor(dotColor)};
+  opacity: 1;
+}
+
+.bg-image-with-slider.${uniqueClass} .slick-dots li.slick-active button:before {
+  color: ${hsColor(activeColor)};
+}
+
         .bg-image-with-slider__testimonial-main{
       background:rgba(40, 39, 39, 100%);
       color:#fff;
@@ -159,32 +197,32 @@ if (bg?.background_type === "bg_image" && bg?.bg_image) {
     padding-left: 15px;}
       `}
       </style>
-      <div id={customId} className={`bg-image-with-slider ${uniqueClass} ${customClass}`}>
+      <div
+        id={customId}
+        className={`bg-image-with-slider ${uniqueClass} ${customClass}`}
+      >
         <div className="bg-image-with-slider__testimonial-slider ">
           <div className="bg-image-with-slider__wrapper">
-            <div className={`bg-image-with-slider__bg-top-img `} style={topBg}/>
-            <div className="bg-image-with-slider__testimonial-main" >
-              <RichText className="bg-image-with-slider__testimonial-heading" fieldPath="headingGroup.topHeading"/>
-              {sliderEnable?(<Island
-                hydrateOn="load"
-                module={testimonialSlider}
-                moduleName="testimonialSlider"
-                clientOnly={true}
-                items={testmonials}
-                sliderEnable={sliderEnable}
-                slideToShow={slideToShow}
-                slidesToScroll={slidesToScroll}
+            <div
+              className={`bg-image-with-slider__bg-top-img `}
+              style={topBg}
+            />
+            <div className="bg-image-with-slider__testimonial-main">
+              <RichText
+                className="bg-image-with-slider__testimonial-heading"
+                fieldPath="headingGroup.topHeading"
+              />
+            
+                <Island
+                  hydrateOn="load"
+                  module={testimonialSlider}
+                  moduleName="testimonialSlider"
+                  clientOnly={true}
+                  items={testmonials}
+                  autoPlaySpeed={autoPlaySpeed}
                 autoPlay={autoPlay}
-                autoPlaySpeed={autoPlaySpeed}
-                sliderDots={sliderDots}
-                sliderArrows={sliderArrows}
-
-              />):(<div  className='bg-image-with-slider__content'>
-<div dangerouslySetInnerHTML={{__html:testimonialText}}/>
-<div dangerouslySetInnerHTML={{__html:authorName}}/>
-
-    </div>)}
-              
+                />
+            
             </div>
           </div>
         </div>
