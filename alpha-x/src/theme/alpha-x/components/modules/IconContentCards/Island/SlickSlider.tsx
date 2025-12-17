@@ -1,7 +1,8 @@
 import Slider from "react-slick";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css'
-export default function SlickSlider({ cards }) {
+import { Icon } from "@hubspot/cms-components";
+export default function SlickSlider({ cards, autoplay, autoplaySpeed }) {
 const NextArrow = (props) => {
   const { className, style, onClick } = props;
   return (
@@ -26,34 +27,22 @@ const PrevArrow = (props) => {
     </div>
   );
 };
-var settings = {
+const settings = {
   dots: true,
   infinite: true,
   arrows: true,
-  speed: 600,                
-  cssEase: "ease-in-out",    
+  speed: 600,
+  cssEase: "ease-in-out",
   slidesToShow: 2,
   slidesToScroll: 1,
-  autoplay: true,          
-  autoplaySpeed: 2000,    
-  pauseOnHover: true,  
-  pauseOnFocus: true,
+  autoplay: autoplay,
+  autoplaySpeed: autoplaySpeed,
+  pauseOnHover: true,
   nextArrow: <NextArrow />,
   prevArrow: <PrevArrow />,
   responsive: [
-    {
-      breakpoint: 1024,
-      settings: {
-        slidesToShow: 2,
-      }
-    },
-    {
-      breakpoint: 768,
-      settings: {
-        slidesToShow: 1,   
-      }
-    }
-  ]
+    { breakpoint: 768, settings: { slidesToShow: 1 } },
+  ],
 };
 
   return (
@@ -61,14 +50,21 @@ var settings = {
       {cards.map((card, index) => (
         <div key={index}>
           <div className="icon-content-card__items">
+            
             <div className="icon-content-card__icon">
-              {card.image_field?.src && (
+              {card.icon_group?.icon_image_choice === 'hubspot' && (
+                <Icon
+                  fieldPath={`cards_repeat.items[${index}].icon_group.icon_field`}
+                  style={{ width: "48px", height: "48px" }}
+                />
+              )}
+            
+              {card.icon_group?.icon_image_choice === 'image' && card.icon_group?.image_field?.src && (
                 <img
-                  src={card.image_field.src}
-                  width={card.image_field.width}
-                  height={card.image_field.height}
-                  alt={card.image_field.alt || ''}
-                  loading="lazy"
+                  src={card.icon_group.image_field.src}
+                  width={card.icon_group.image_field.width}
+                  height={card.icon_group.image_field.height}
+                  alt={card.icon_group.image_field.alt || 'Icon Image'}
                 />
               )}
             </div>

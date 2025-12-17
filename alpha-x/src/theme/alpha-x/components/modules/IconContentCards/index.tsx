@@ -1,11 +1,19 @@
 import { useId } from 'react';
 import { Island } from '@hubspot/cms-components';
 import SlickSlider from './Island/SlickSlider.js?island';
+import { Icon } from "@hubspot/cms-components";
 export const Component = ({ fieldValues }) => {
 const cards = fieldValues.cards_repeat?.items || [];
 const reactId = useId();
 const uniqueClass = `module_${reactId.replace(/[^a-zA-Z0-9]/g, "")}`;
 const sliderEnabled = fieldValues.slider_enable?.enable;
+const autoplay = fieldValues.style.slider_style?.autolpay_enable;
+const autoplaySpeed = fieldValues.style.slider_style?.speed;
+
+  const customClass = fieldValues?.custom_id_class?.class;
+  const customId = fieldValues?.custom_id_class?.custom_id;
+
+
 // ---- Extract Dynamic Style Fields ----
 const ds = fieldValues.style?.spacing?.desktop?.desktop_spacing || {};
 const desktopStyle = {
@@ -86,72 +94,8 @@ return (
   <>
     <style>
       {`
-            .${uniqueClass} .slick-arrow:before { content: unset;}
-            .slick-arrow svg path { fill: #fff;}
-        .icon-content-cards.${uniqueClass} {
-          ${backgroundCSS};
-          padding-top: ${desktopStyle.paddingTop};
-          padding-bottom: ${desktopStyle.paddingBottom};
-          padding-left: ${desktopStyle.paddingLeft};
-          padding-right: ${desktopStyle.paddingRight};
-        }
-
-        .${uniqueClass} .icon-content-cards__wrapper {
-          max-width: 1280px;
-          padding: 0 20px;
-          margin: 0 auto;
-          width:100%;
-        }
-
-        .${uniqueClass} .icon-content-cards__heading {
-          text-align: center;
-          margin-bottom: 50px;
-        }
-
-        .${uniqueClass} .icon-content-cards__heading > *,
-        .${uniqueClass} .cardHeading > * {
-          margin: 0;
-        }
-
-        .${uniqueClass} .icon-content-cards__cards.slider-enable {
-          width: 100%;
-          padding:0 50px
-        }
-
-        .${uniqueClass} .slick-slide {
-          padding: 0 10px;
-          box-sizing: border-box;
-        }
-
-        .${uniqueClass} .icon-content-card__items {
-          padding: 25px;
-          border-radius: 10px;
-          border: 1px solid #051f46;
-          height: 100%;
-          box-sizing: border-box;
-        }
-
-        .${uniqueClass} .icon-content-card__icon {
-          margin-bottom: 20px;
-        }
-
-        .${uniqueClass} .icon-content-card__icon img {
-          display: block;
-          object-fit: contain;
-          max-width: 100%;
-          height: auto;
-        }
-
-        .${uniqueClass} .iconInner {
-          margin-bottom: 30px;
-        }
-
-        .${uniqueClass} .iconInner svg {
-          height: 20px;
-        }
-
-        /* Slick arrows styling */
-        .${uniqueClass} .slick-arrow {
+ ${sliderEnabled ? `
+  .${uniqueClass} .slick-arrow {
         width: 40px;
   height: 40px;
   z-index: 1000;
@@ -162,10 +106,6 @@ return (
   border-radius: 100px;
         }
 
-        .${uniqueClass} .slick-arrow:before {
-          font-size: 40px;
-          opacity: 1;
-        }
 
         .${uniqueClass} .slick-prev {
           left: 0;
@@ -199,23 +139,96 @@ return (
         .${uniqueClass} .slick-dots li button:before {
           content:none
         }
-  .${uniqueClass} .slick-track
-{
-    display: flex !important;
-}
-
-  .${uniqueClass} .slick-slide
-{
-    height: inherit !important;
-}
          .${uniqueClass} .slick-dots li.slick-active button {
     opacity: 1;
 }
+      .${uniqueClass} .slick-slide {
+          padding: 25px;
+          border-radius: 10px;
+          border: 1px solid #051f46;
+        
+        }
+   .${uniqueClass} .icon-content-cards__cards.slider-enable {
+          width: 100%;
+          padding:0 50px
+        }
+   .${uniqueClass} .slick-slide>div { height: 100%;}
+.${uniqueClass} .slick-slide>div>div {  height: 100%;}
+        .${uniqueClass} .slick-track{  display: flex ;}
+       .${uniqueClass} .slick-slide{  margin:0 5px;  height: inherit;}
+        .${uniqueClass} .slick-arrow:before { content: unset;}
+        .${uniqueClass} .slick-arrow svg path { fill: #fff;}
+  ` : `
+          
 .${uniqueClass} .no-slider {
 display: grid;
 grid-template-columns: repeat(3, 1fr);
 gap: 20px;
 }
+  .${uniqueClass} .no-slider .icon-content-card__items {
+          padding: 25px;
+          border-radius: 10px;
+          border: 1px solid #051f46;
+        
+        }
+@media(max-width:1024px){
+.${uniqueClass} .no-slider {
+  grid-template-columns: repeat(2, 1fr);
+}
+}
+      @media(max-width:767px) {
+          .${uniqueClass} .no-slider {
+  grid-template-columns: repeat(1, 1fr);
+}
+ }
+  `}
+
+        .icon-content-cards.${uniqueClass} {
+          ${backgroundCSS};
+          padding-top: ${desktopStyle.paddingTop};
+          padding-bottom: ${desktopStyle.paddingBottom};
+          padding-left: ${desktopStyle.paddingLeft};
+          padding-right: ${desktopStyle.paddingRight};
+        }
+
+        .${uniqueClass} .icon-content-cards__wrapper {
+          max-width: 1280px;
+          padding: 0 20px;
+          margin: 0 auto;
+          width:100%;
+        }
+
+        .${uniqueClass} .icon-content-cards__heading {
+          text-align: center;
+          margin-bottom: 50px;
+        }
+
+        .${uniqueClass} .icon-content-cards__heading > *,
+        .${uniqueClass} .cardHeading > * {
+          margin: 0;
+        }
+
+      
+
+        .${uniqueClass} .icon-content-card__icon {
+          margin-bottom: 20px;
+        }
+
+        .${uniqueClass} .icon-content-card__icon img {
+          display: block;
+          object-fit: contain;
+          max-width: 100%;
+          height: auto;
+        }
+
+        .${uniqueClass} .iconInner {
+          margin-bottom: 30px;
+        }
+
+        .${uniqueClass} .iconInner svg {
+          height: 20px;
+        }
+
 
 
         @media(max-width:1024px) {
@@ -225,15 +238,10 @@ gap: 20px;
             padding-left: ${tabletStyle.paddingLeft};
             padding-right: ${tabletStyle.paddingRight};
           }
-.${uniqueClass} .no-slider {
-  grid-template-columns: repeat(2, 1fr);
-}
+
         }
 
         @media(max-width:767px) {
-          .${uniqueClass} .no-slider {
-  grid-template-columns: repeat(1, 1fr);
-}
           .icon-content-cards.${uniqueClass} {
             padding-top: ${mobileStyle.paddingTop};
             padding-bottom: ${mobileStyle.paddingBottom};
@@ -246,36 +254,45 @@ gap: 20px;
       `}
     </style>
 
-    <div className={`icon-content-cards ${uniqueClass}`}>
+    <div {...(customId ? { id: customId } : {})} className={`icon-content-cards ${customClass} ${uniqueClass}`}>
       <div className="icon-content-cards__wrapper">
         <div
           className="icon-content-cards__heading"
           dangerouslySetInnerHTML={{ __html: fieldValues.main_heading?.heading || '' }}
         />
 
-      {sliderEnabled ? (
+    {sliderEnabled ? (
 // ---------- SLIDER VERSION ----------
 <Island
 module={SlickSlider}
 hydrateOn="load"
 cards={cards}
+autoplay={autoplay}       
+autoplaySpeed={autoplaySpeed }  
 clientOnly={true}
 />
 ) : (
+
 <div className="icon-content-cards__cards no-slider">
   {cards.map((card, index) => (
     <div key={index} className="icon-content-card__items">
-        <div className="icon-content-card__icon">
-          {card.image_field?.src && (
-            <img
-              src={card.image_field.src}
-              width={card.image_field.width}
-              height={card.image_field.height}
-              alt={card.image_field.alt || ''}
-              loading="lazy"
-            />
-          )}
-        </div>
+<div className="icon-content-card__icon">
+  {card.icon_group?.icon_image_choice === 'hubspot' && (
+    <Icon
+      fieldPath={`cards_repeat.items[${index}].icon_group.icon_field`}
+      style={{ width: "48px", height: "48px" }}
+    />
+  )}
+
+  {card.icon_group?.icon_image_choice === 'image' && card.icon_group?.image_field?.src && (
+    <img
+      src={card.icon_group.image_field.src}
+      width={card.icon_group.image_field.width}
+      height={card.icon_group.image_field.height}
+      alt={card.icon_group.image_field.alt || 'Icon Image'}
+    />
+  )}
+</div>
 
         <div
           className="icon-content-card__title"
@@ -284,6 +301,8 @@ clientOnly={true}
     </div>
   ))}
 </div>
+
+ 
 )}
 
 
