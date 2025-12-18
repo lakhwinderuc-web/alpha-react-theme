@@ -1,6 +1,6 @@
-import { ModuleFields,TextField,RichTextField,FileField,VideoField, EmbedField, FieldGroup,ChoiceField ,ImageField} from '@hubspot/cms-components/fields';
+import { ModuleFields,BooleanField,TextField,RichTextField,FileField,VideoField, EmbedField, FieldGroup,ChoiceField ,ImageField} from '@hubspot/cms-components/fields';
 import simpleImage from '../../../images/thumnail.jpg'
-import VideoFile from '../../../video/video-compress.mp4'
+import VideoFile from '../../../video/Cassie Video.mp4'
 export const fields = (
  <ModuleFields>
 <FieldGroup name="custom_id_class" label="Custom | Class & ID">
@@ -28,6 +28,17 @@ export const fields = (
         />
   </FieldGroup>
 
+<FieldGroup name='popup_enable' label='Popup Enable'>
+ <BooleanField
+      name="enable"
+      label="Enable"
+      required={false}
+      locked={false}
+      display="checkbox"
+      default={true}
+    />
+</FieldGroup>
+
     <FieldGroup name='video_image' label='Video / Image'>
     <ChoiceField
       name="video_choice"
@@ -42,7 +53,7 @@ export const fields = (
          ["hubspot_video", "Hubspot Video"],
          ["image", "Simple Image"],
       ]}
-      default="embed_code"
+      default="file"
     />
     <FieldGroup name='video_thumnail' label='Thumnail Image'>
        <ImageField
@@ -127,29 +138,14 @@ controlling_value_regex: 'hubspot_video',
           }}
     />
  */}
-  <EmbedField
+<EmbedField
   name="embed_field"
-  label="Embed"
+  label="Video Embed (URL or iframe code)"
   required={false}
   locked={false}
   supportedSourceTypes={["oembed", "html"]}
-  supportedOembedTypes={["photo", "video", "link", "rich"]}
+  supportedOembedTypes={["video"]}
   supportedMediaBridgeProviders={[]}
-default={{
-  source_type: "html",
-  oembed_response: {
-    html: `<iframe 
-             width="560" 
-             height="315" 
-             src="https://www.youtube.com/embed/D0UnqGm_miA?si=Qt4aAMk2pZluYT3F" 
-             title="YouTube video player" 
-             frameborder="0" 
-             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-             referrerpolicy="strict-origin-when-cross-origin" 
-             allowfullscreen>
-           </iframe>`,
-  },
-}}
   visibility={{
     controlling_field_path: "video_image.video_choice",
     operator: "EQUAL",
