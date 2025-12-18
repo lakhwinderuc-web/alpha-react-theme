@@ -60,6 +60,8 @@ export const Component = (props: BlogListingProps) => {
     defaultContent,
   } = props;
 
+  console.log("hublData",props.hublData);
+
   const blogListingClasses = cx(swm('hs-elevate-blog-listing'), {
     [styles['hs-elevate-blog-listing--has-featured-post']]: (currentPageNumber === 1 || currentPageNumber === undefined) && use_featured_image_in_summary,
   });
