@@ -14,9 +14,9 @@ export const fields = (
         ["file", "File-Video "],
         ["embed","Embed-Video"]
       ]}
-      default="default"
+      default="embed"
     />
-    <VideoField
+       <VideoField
       name="videoplayer_field"
       label="Video"
       required={false}
@@ -26,10 +26,16 @@ export const fields = (
         player_id: 32173842991,
         height: 1224,
         width: 1872,
+        conversion_asset: {
+          type: "CTA",
+          id: "c3e4fa03-2c69-461d-b9af-22b2fde86bc7",
+          position: "POST",
+        },
         loop_video: false,
         mute_by_default: false,
         autoplay: false,
       }}
+
        visibility={{
             controlling_field_path: "testVideo",
             operator: "EQUAL",
@@ -58,7 +64,7 @@ export const fields = (
       supportedOembedTypes={["photo", "video", "link", "rich"]}
       supportedMediaBridgeProviders={[]}
      default={{
-   source_type: "html",
+   source_type: "oembed",
     oembed_response: {
       type:"video",
       html:`

@@ -179,9 +179,6 @@ export const hublDataTemplate = `
 } %}
 
 
-
-
-
 `;
 
 export const meta = {
