@@ -100,8 +100,6 @@ export const hublDataTemplate = `
   {% for post in blog_recent_posts(blog, 3) %}
     {% do blog_post_ids.append(post.id) %}
     
-  
-
     {% set temp_post = {
         id: post.id,
         absoluteUrl: post.absoluteUrl|escape_url,
