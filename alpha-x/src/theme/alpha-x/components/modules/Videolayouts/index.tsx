@@ -1,7 +1,7 @@
 import { useId  } from 'react';
 import { Island } from '@hubspot/cms-components';
 import VideoIsland from './Island/VideoIsland.js?island' 
-export const Component = ({ fieldValues }) => {
+export const Component = ({ fieldValues,hublData }) => {
   const reactId = useId();
   
 const uniqueClass = `module_${reactId.replace(/[^a-zA-Z0-9]/g, '')}`;
@@ -10,24 +10,12 @@ const customId = fieldValues?.custom_id_class?.custom_id;
 const videoType = fieldValues?.video_image?.video_choice || 'image';
 const imageField = fieldValues?.video_image?.image_field;
 const embedField = fieldValues?.video_image?.embed_field;
-const hubspotVideo = fieldValues?.video_image?.videoplayer_field;
-const videoFile = fieldValues?.video_image?.file_field;
-const videoPoster = fieldValues?.video_image?.video_thumnail?.image;
-const DEFAULT_IFRAME = `<iframe 
-                                                      width="560" 
-                                                      height="315" 
-                                                      src="https://www.youtube.com/embed/D0UnqGm_miA?si=Qt4aAMk2pZluYT3F" 
-                                                      title="YouTube video player" 
-                                                      frameborder="0" 
-                                                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                                                      referrerpolicy="strict-origin-when-cross-origin" 
-                                                      allowfullscreen>
-                                                    </iframe>`;
- 
-const embedHtml =
-  embedField?.source_type === "oembed"
-    ? embedField?.oembed_response?.html
-    : embedField?.html || DEFAULT_IFRAME;
+// const hubspotVideo = fieldValues?.video_image?.videoplayer_field;
+// const videoFile = fieldValues?.video_image?.file_field;
+// const videoPoster = fieldValues?.video_image?.video_thumnail?.image;
+const {videoData}=hublData;
+console.log(videoData);
+
 
 const popupEnable = fieldValues?.popup_enable?.enable === true;
   return (
@@ -224,11 +212,11 @@ body.video-popup-open  {
           module={VideoIsland}
           hydrateOn="load"
           uniqueClass={uniqueClass}
-          videoType={videoType}
-          videoFile={videoFile}
-          embedHtml={embedHtml}
-          hubspotVideo={hubspotVideo}
-          videoPoster={videoPoster}
+          videoType={videoData.videoType}
+          videoFile={videoData.fileUrl}
+          embedHtml={videoData.externalEmbedHtml}
+          hubspotVideo={videoData.hubspotVideoHtml}
+          videoPoster={videoData.poster}
           popupEnable={popupEnable}
         />
       )}
@@ -243,6 +231,55 @@ body.video-popup-open  {
 
 export { fields } from "./fields.js";
 
+export const hublDataTemplate = `
+{# 1. Initialize empty list to store processed video data #}
+{% set video_data_list = [] %}
+
+{# Since your fields are in the 'video_image' group, we process that specific object #}
+{% set item = module.video_image %}
+
+{# Prepare variables for the different formats #}
+{% set video_html = "" %}
+{% set embed_html = "" %}
+
+{# Logic for Choice: HubSpot Video #}
+{% if item.video_choice == "hubspot_video" and item.videoplayer_field.player_id %}
+  {% set video_html %}
+    {% video_player "embed_player"
+      player_id="{{ item.videoplayer_field.player_id }}",
+      type="{{ item.videoplayer_field.player_type or 'scriptV4' }}",
+      autoplay={{ item.videoplayer_field.autoplay }},
+      loop={{ item.videoplayer_field.loop_video }},
+      muted={{ item.videoplayer_field.mute_by_default }},
+      full_width=True,
+      conversion_asset={{ item.videoplayer_field.conversion_asset | tojson }}
+    %}
+  {% endset %}
+
+{# Logic for Choice: Embed Code #}
+{% elif item.video_choice == "embed_code" %}
+  {% if item.embed_field.source_type == "oembed" %}
+    {% set embed_html = item.embed_field.oembed_response.html %}
+  {% else %}
+    {% set embed_html = item.embed_field.embed_html %}
+  {% endif %}
+{% endif %}
+
+{# 2. Construct the data object to send to React #}
+{% do video_data_list.append({
+  "videoType": item.video_choice,
+  "hubspotVideoHtml": video_html,
+  "externalEmbedHtml": embed_html,
+  "fileUrl": item.file_field,
+  "poster": item.video_thumnail.image,
+}) %}
+
+{# 3. Final object exported to the component #}
+{% set hublData = {
+  'videoData': video_data_list[0],
+  'popupEnabled': module.popup_enable.enable,
+  
+} %}`;
 
 export const meta = {
 "label": "Video Layouts",

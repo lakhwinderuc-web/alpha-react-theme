@@ -158,12 +158,10 @@ export default function VideoIsland({
           )}
 
           {/* HUBSPOT VIDEO */}
-          {videoType === "hubspot_video" && hubspotVideo?.player_id && (
+          {videoType === "hubspot_video"  && (
             <div
               className="hs-video-widget"
-              data-player-id={hubspotVideo.player_id}
-              data-width={hubspotVideo.width || 1920}
-              data-height={hubspotVideo.height || 1080}
+             dangerouslySetInnerHTML={{__html:hubspotVideo}}
             />
           )}
         </div>

@@ -53,7 +53,7 @@ export const fields = (
          ["hubspot_video", "Hubspot Video"],
          ["image", "Simple Image"],
       ]}
-      default="embed_code"
+      default="hubspot_video"
     />
     <FieldGroup name='video_thumnail' label='Thumnail Image'>
        <ImageField
@@ -108,36 +108,6 @@ controlling_value_regex: 'hubspot_video',
 }}
     />
 
- {/* <EmbedField
-      name="embed_field"
-      label="Embed"
-      required={false}
-      locked={false}
-     supportedSourceTypes={["oembed"]}
-  supportedOembedTypes={["video"]}
-      supportedMediaBridgeProviders={[]}
-     default={{
-   source_type: "oembed",
-    oembed_response: {
-      type:"video",
-      html:`
-      <iframe
-        width="100%"
-        height="450"
-        src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-        frameborder="0"
-        allowfullscreen>
-      </iframe>
-    `,
-    }
-  }}
-  visibility={{
-            controlling_field_path: "video_image.video_choice",
-            operator: "EQUAL",
-            controlling_value_regex: "embed_code",
-          }}
-    />
- */}
 <EmbedField
   name="embed_field"
   label="Video Embed (URL or iframe code)"
