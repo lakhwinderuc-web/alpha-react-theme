@@ -27,7 +27,8 @@ const DEFAULT_IFRAME = `<iframe
 const embedHtml =
   embedField?.source_type === "oembed"
     ? embedField?.oembed_response?.html
-    : embedField?.html;
+    : embedField?.html || DEFAULT_IFRAME;
+
 const popupEnable = fieldValues?.popup_enable?.enable === true;
   return (
     <>
@@ -192,86 +193,49 @@ body.video-popup-open  {
     }
 
 </style>
-    <section
-      {...(customId ? { id: customId } : {})}
-      className={`video-popup ${customClass} ${uniqueClass}`}
-      data-video-type={videoType}
-    >
-      <div className="video-popup__container">
+<section
+  {...(customId ? { id: customId } : {})}
+  className={`video-popup ${customClass} ${uniqueClass}`}
+  data-video-type={videoType}
+>
+  <div className="video-popup__container">
+    <div
+      className="video-popup__heading"
+      dangerouslySetInnerHTML={{
+        __html: fieldValues?.main_heading?.heading || "",
+      }}
+    />
 
-        <div
-          className="video-popup__heading"
-          dangerouslySetInnerHTML={{
-            __html: fieldValues?.main_heading?.heading || '',
-          }}
+    <div className="video-popup__items">
+      {/* IMAGE ONLY */}
+      {videoType === "image" && imageField?.src && (
+        <img
+          src={imageField.src}
+          alt={imageField.alt || ""}
+          width={imageField.width}
+          height={imageField.height}
+          loading="lazy"
         />
+      )}
 
-        <div className="video-popup__items">
+      {/* ALL VIDEO TYPES (POPUP + INLINE HANDLED IN ISLAND) */}
+      {videoType !== "image" && (
+        <Island
+          module={VideoIsland}
+          hydrateOn="load"
+          uniqueClass={uniqueClass}
+          videoType={videoType}
+          videoFile={videoFile}
+          embedHtml={embedHtml}
+          hubspotVideo={hubspotVideo}
+          videoPoster={videoPoster}
+          popupEnable={popupEnable}
+        />
+      )}
+    </div>
+  </div>
+</section>
 
-          {/* IMAGE */}
-          {videoType === 'image' && imageField?.src && (
-            <div className='video-popup__image'>
-            <img
-              src={imageField.src}
-              alt={imageField.alt || ''}
-              width={imageField.width}
-              height={imageField.height}
-              loading={imageField.loading || 'lazy'}
-            />
-            </div>
-          )}
-
-          {/* EMBED */}
-
-{/* {videoType === "embed_code" && embedField && (
-  <div
-    className="video-popup__embed"
-    dangerouslySetInnerHTML={{
-      __html:
-        embedField.source_type === "oembed"
-          ? embedField.oembed_response?.html || ""
-          : embedField.html || "",
-    }}
-  />
-)} */}
-
-{videoType === "embed_code" && (
-  <div
-    className="video-popup__embed"
-    dangerouslySetInnerHTML={{
-      __html: embedHtml?.trim() || DEFAULT_IFRAME,
-    }}
-  />
-)}
-
-
-     
-  {/* HUBSPOT VIDEO */}
-  
-{videoType === 'hubspot_video' && hubspotVideo?.player_id && (
-  <div
-    className="video-popup__hubspot hs-video-widget"
-    data-player-id={hubspotVideo.player_id}
-    data-width={hubspotVideo.width || 1920}
-    data-height={hubspotVideo.height || 1000}
-  />
-)}
-    {/* FILE VIDEO */}
-{videoType === "file" && videoFile && (
-  <Island
-    module={VideoIsland}
-    hydrateOn="load"
-    uniqueClass={uniqueClass}
-    videoFile={videoFile}
-    videoPoster={videoPoster}
-    popupEnable={popupEnable} // true ya false
-  />
-)}
-
-
-        </div>
-      </div>
-    </section>
     </>
   );
 };
