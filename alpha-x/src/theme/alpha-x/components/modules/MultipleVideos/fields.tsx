@@ -1,7 +1,68 @@
-import { ModuleFields, VideoField,FileField,EmbedField,ChoiceField } from "@hubspot/cms-components/fields";
+import { ModuleFields, VideoField,FileField,EmbedField,ChoiceField, RepeatedFieldGroup } from "@hubspot/cms-components/fields";
 
 export const fields = (
   <ModuleFields>
+    <RepeatedFieldGroup name="videoGroup" label="Video Repeater"  occurrence={{
+        min: 0,
+        max: 20,
+        default: 3,
+      }}
+      
+      default={[{
+          testVideo: "embed",
+          embed_field: {
+        source_type: "oembed",
+        oembed_response: {
+          type: "video",
+          html: `
+            <iframe
+              width="100%"
+              height="450"
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+              frameborder="0"
+              allowfullscreen>
+            </iframe>
+          `,
+        },
+      },
+      },
+      {
+          testVideo: "embed",
+          embed_field: {
+        source_type: "oembed",
+        oembed_response: {
+          type: "video",
+          html: `
+            <iframe
+              width="100%"
+              height="450"
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+              frameborder="0"
+              allowfullscreen>
+            </iframe>
+          `,
+        },
+      },
+      },
+      {
+          testVideo: "embed",
+          embed_field: {
+        source_type: "oembed",
+        oembed_response: {
+          type: "video",
+          html: `
+            <iframe
+              width="100%"
+              height="450"
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+              frameborder="0"
+              allowfullscreen>
+            </iframe>
+          `,
+        },
+      },
+      },
+      ]}>
      <ChoiceField
       name="testVideo"
       label="Video "
@@ -37,7 +98,7 @@ export const fields = (
       }}
 
        visibility={{
-            controlling_field_path: "testVideo",
+            controlling_field_path: "videoGroup.testVideo",
             operator: "EQUAL",
             controlling_value_regex: "default",
           }}
@@ -49,7 +110,7 @@ export const fields = (
       locked={false}
       picker="file"
        visibility={{
-            controlling_field_path: "testVideo",
+            controlling_field_path: "videoGroup.testVideo",
             operator: "EQUAL",
             controlling_value_regex: "file",
           }}
@@ -79,10 +140,11 @@ export const fields = (
     }
   }}
   visibility={{
-            controlling_field_path: "testVideo",
+            controlling_field_path: "videoGroup.testVideo",
             operator: "EQUAL",
             controlling_value_regex: "embed",
           }}
     />
+    </RepeatedFieldGroup>
   </ModuleFields>
 );
