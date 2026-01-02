@@ -8,14 +8,15 @@ export default function PopUpIsland({
   embedHtml,
   videoType,
   heading,
-}) {
+}) 
+
+{
   const videoRef = useRef(null);
   const playButtonRef = useRef(null);
   const videoSectionRef = useRef(null);
   const [popupOpen, setPopupOpen] = useState(false);
 
   const openPopup = () => setPopupOpen(true);
-
   const closePopup = () => {
     setPopupOpen(false);
     videoRef.current?.pause();
@@ -151,7 +152,6 @@ export default function PopUpIsland({
                 src={videoFile.src}
                 poster={videoPoster.src}
                 playsInline
-            
               />
               </>
             )}

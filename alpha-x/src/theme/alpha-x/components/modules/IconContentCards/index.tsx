@@ -301,8 +301,6 @@ clientOnly={true}
     </div>
   ))}
 </div>
-
- 
 )}
 
 

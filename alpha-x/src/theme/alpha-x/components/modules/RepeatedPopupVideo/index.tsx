@@ -1,17 +1,16 @@
 import { useId } from "react";
 import { Island } from "@hubspot/cms-components";
 import PopUpIsland from "./Island/PopUpIsland.js?island";
+
+
 export const Component = ({ fieldValues, hublData }) => {
   const reactId = useId();
-
   const uniqueClass = `module_${reactId.replace(/[^a-zA-Z0-9]/g, "")}`;
   const customClass = fieldValues?.custom_id_class?.class || "";
   const customId = fieldValues?.custom_id_class?.custom_id;
   const videoType = fieldValues?.video_image?.video_choice || "image";
-  // const imageField = fieldValues?.heading_video?.video_image?.image_field;
-console.log(hublData)
+// hublData
 const {videoItems}=hublData;
-  console.log("Image",videoItems.imageField)
 
   return (
     <>
@@ -195,8 +194,6 @@ body.video-popup-open  {
                 videoPoster={item.videoPoster}
                 popupEnable={item.popupEnable} // true ya false
               />))}
-              
-          
           </div>
         </div>
       </section>
@@ -255,6 +252,7 @@ export const hublDataTemplate = `
 {% set hublData = {
   'videoItems': video_list
 } %}`;
+
 export const meta = {
   label: "Repeated PopUp Video",
   css_assets: [],

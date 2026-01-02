@@ -48,6 +48,7 @@ export const fields = (
         label="Button Choice"
         required={false}
         locked={false}
+        display="select"
         choices={[
           ["primary", "Primary"],
           ["secondary", "Secondary"],
