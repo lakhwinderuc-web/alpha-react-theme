@@ -9,7 +9,6 @@ const image=fieldValues?.contentImg?.image;
 
   const customClass = fieldValues?.custom_id_class?.class;
   const customId = fieldValues?.custom_id_class?.custom_id;
-const emptyString='""';
 
 const reactId = useId();
 const uniqueClass = `module_${reactId.replace(/[^a-zA-Z0-9]/g, "")}`;

@@ -336,6 +336,7 @@ export const fields = (
           }}
         />
       </FieldGroup>
+      
       <FieldGroup name="card_style" label="Card Style">
         <FieldGroup name="cards_per_row" label="Cards Per Row">
           <NumberField
