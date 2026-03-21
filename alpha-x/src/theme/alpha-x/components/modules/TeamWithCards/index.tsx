@@ -24,7 +24,7 @@ export { fields } from "./fields.js";
 
 
 export const meta = {
- "label": "Team cards",
+ "label": "Team With Cards",
  "css_assets": [],
  "external_js": [],
  "global": false,
